@@ -108,7 +108,7 @@
             </HBox>
             <HBox prefHeight="241.0" prefWidth="779.0">
                <children>
-                  <TextArea fx:id="texte" prefHeight="198.0" prefWidth="779.0" text="Votre texte..." />
+                  <TextArea fx:id="texteAide" prefHeight="198.0" prefWidth="779.0" text="Votre texte..." />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">

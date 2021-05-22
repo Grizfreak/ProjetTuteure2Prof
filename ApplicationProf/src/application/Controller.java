@@ -28,6 +28,8 @@ public class Controller {
 	@FXML
 	private TextArea texte;
 	@FXML
+	private TextArea texteAide;
+	@FXML
 	private TextArea exo;
 	@FXML
 	private TextField video;
@@ -70,17 +72,28 @@ public class Controller {
 	private int sec;
 
 	private String aide;
-	private static String aide2;
+
 	private boolean evalu;
-	private static boolean valu;
+
 	private boolean casseTexte;
-	private static boolean cassetext;
+
 	private boolean afficheRaports;
 	private boolean remplacementPartiels;
 	private boolean solutions;
-	
+
+	private static String caro;
+	private static boolean cassetext;
+	private static boolean valu;
+	private static boolean remplacement;
 	private static int minn;
 	private static int secc;
+	private static boolean sol;
+	private static String aide2;
+	private static boolean affR;
+	private static boolean cass;
+	private static boolean timme;
+	private static String nomm;
+
 	public void enreg() throws FileNotFoundException {
 		String enreg = exo.getText();
 		FileChooser enr = new FileChooser();
@@ -149,27 +162,28 @@ public class Controller {
 		chemin1 = chemin2;
 	}
 
-	public void save() throws IOException {	
+	public void save() throws IOException {
 		if (chemin1 != null) {
 			try {
 				FileInputStream fus = new FileInputStream(chemin1);
-				FileOutputStream fas = new FileOutputStream(nom.getText()+".ang");
+				FileOutputStream fas = new FileOutputStream(nom.getText() + ".ang");
+				nomm = nom.getText();
 				int octet = fus.read();
-				int nb=0;
-				while(octet != -1 ){
+				int nb = 0;
+				while (octet != -1) {
 					octet = fus.read();
 					nb++;
 				}
-				PrintWriter sortie2 = new PrintWriter(new FileWriter(nom.getText()+".ang", true));
+				PrintWriter sortie2 = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
 				fus.close();
-				
+
 				FileInputStream fis = new FileInputStream(chemin1);
 				octet = fis.read();
-				while (octet != -1 ){
+				while (octet != -1) {
 					fas.write(octet);
 					octet = fis.read();
 				}
-				sortie2.println("\nnb : "+nb+";\n");
+				sortie2.println("\nnb : " + nb + ";\n");
 				sortie2.close();
 				fis.close();
 				fas.close();
@@ -180,15 +194,18 @@ public class Controller {
 
 		}
 
-		PrintWriter sortie1 = new PrintWriter(new FileWriter(nom.getText()+".ang", true));
+		PrintWriter sortie1 = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
 		sortie1.print("\n\n");
 		sortie1.print("TextOcculte: ");
 		sortie1.print(texto);
 		sortie1.print("\n\n");
 		sortie1.print("Caractère: ");
 		caractère = carocc.getText();
+		caro = caractère;
 		sortie1.print(caractère);
 		sortie1.print("\n\n");
+		evalu = eval.isSelected();
+		valu = evalu;
 		if (eval.isSelected()) {
 			sortie1.print("Eval: ");
 			sortie1.print("1");
@@ -204,51 +221,60 @@ public class Controller {
 			sortie1.print("0");
 			sortie1.print("\n\n");
 			sortie1.print("AffichR: ");
-			if(afficheRaport.isSelected()) {
+			afficheRaports = afficheRaport.isSelected();
+			affR = afficheRaports;
+			if (afficheRaport.isSelected()) {
 				sortie1.print(1);
-			}else {
+			} else {
 				sortie1.print(0);
 			}
 			sortie1.print("\n\n");
 			sortie1.print("RemplacementP: ");
-			if(remplacementPartiel.isSelected()) {
+			remplacementPartiels = remplacementPartiel.isSelected();
+			remplacement = remplacementPartiels;
+			if (remplacementPartiel.isSelected()) {
 				sortie1.print(1);
-			}
-			else {
+			} else {
 				sortie1.print(0);
 			}
 			sortie1.print("\n\n");
 			sortie1.print("BtnSolution: ");
-			if(solution.isSelected()) {
+			solutions = solution.isSelected();
+			sol = solutions;
+			if (solution.isSelected()) {
 				sortie1.print(1);
-			}else {
+			} else {
 				sortie1.print(0);
 			}
 		}
 		sortie1.print("\n\n");
 		sortie1.print("Time: ");
+		timme = time.isSelected();
 		if (time.isSelected()) {
+			min = Integer.parseInt(min2.getText());
+			minn = min;
 			sortie1.print(min2.getText());
-			minn = min2;
 			sortie1.print(" : ");
+			sec = Integer.parseInt(sec2.getText());
+			secc = sec;
 			sortie1.print(sec2.getText());
-			secc = sec2;
-			
-		}else {
-			sortie1.print("0");
+		} else {
+			sortie1.print("null");
 		}
 		sortie1.print("\n\n");
-		sortie1.print("\\");
+		sortie1.print("Casse: ");
+		cassetext = casseText.isSelected();
+		cass = cassetext;
 		if (casseText.isSelected()) {
 			sortie1.print("1");
-		}
-		else {
+		} else {
 			sortie1.print("0");
 		}
 		sortie1.print("\n\n");
-		sortie1.print("\\");
+		sortie1.print("aide: ");
 		sortie1.print(texte.getText());
-		aide=texte.getText();
+		aide = texte.getText();
+		aide2 = aide;
 		sortie1.close();
 		changeScene(FXMLLoader.load(getClass().getResource("/application/Prof.fxml")));
 	}
@@ -256,8 +282,23 @@ public class Controller {
 	public void deuxiemePage() throws IOException {
 		texteocculte = texte.getText();
 		texto = texteocculte;
-		System.out.println(texteocculte);
 		changeScene(FXMLLoader.load(getClass().getResource("/application/Creerexo2.fxml")));
+
+		eval.setSelected(valu);
+		if (eval.isSelected()) {
+			remplacementPartiel.setSelected(remplacement);
+			solution.setSelected(sol);
+			afficheRaport.setSelected(affR);
+		}
+		nom.setText(nomm);
+		carocc.setText(caro);
+		casseText.setSelected(cass);
+		time.setSelected(timme);
+		if (time.isSelected()) {
+			min2.setText(String.valueOf(minn));
+			sec2.setText(String.valueOf(secc));
+		}
+		texteAide.setText(aide2);
 	}
 
 	public void checkEvaluation() {
@@ -296,8 +337,29 @@ public class Controller {
 
 	public void arriere() {
 		stage.setScene(ancien);
-		video.setText(chemin1);
-		texte.setText(texto);
+		if (chemin1!= null)
+			video.setText(chemin1);
+		if (texto != null)
+			texte.setText(texto);
+		evalu = eval.isSelected();
+		valu = evalu;
+		aide = texte.getText();
+		aide2 = aide;
+		cassetext = casseText.isSelected();
+		cass = cassetext;
+		timme = time.isSelected();
+		if (time.isSelected()) {
+			min = Integer.parseInt(min2.getText());
+			minn = min;
+			sec = Integer.parseInt(sec2.getText());
+			secc = sec;
+		}
+		solutions = solution.isSelected();
+		sol = solutions;
+		remplacementPartiels = remplacementPartiel.isSelected();
+		remplacement = remplacementPartiels;
+		caractère = carocc.getText();
+		caro = caractère;
 	}
 
 }
