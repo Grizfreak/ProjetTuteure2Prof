@@ -59,41 +59,35 @@ public class Controller {
 	private Text deb;
 
 	private String texteocculte;
-	private static String texto;
+	
 	private int nbOctetVideo;
-
-	private static Scene ancien;
-
-	private static String chemin1;
 	private String nomExo;
 	private String caractère;
-
 	private int min;
 	private int sec;
-
 	private String aide;
-
 	private boolean evalu;
-
 	private boolean casseTexte;
-
 	private boolean afficheRaports;
 	private boolean remplacementPartiels;
 	private boolean solutions;
-
+	private boolean time2;
+	
+	private static Scene ancien;
+	private static String chemin1;
+	private static String texto;
+	private static String nomm;
 	private static String caro;
-	private static boolean cassetext;
 	private static boolean valu;
-	private static boolean remplacement;
+	private static boolean timme;
 	private static int minn;
 	private static int secc;
 	private static boolean sol;
-	private static String aide2;
+	private static boolean cassetext;
+	private static boolean remplacement;
 	private static boolean affR;
-	private static boolean cass;
-	private static boolean timme;
-	private static String nomm;
-
+	private static String aide2;
+	
 	public void enreg() throws FileNotFoundException {
 		String enreg = exo.getText();
 		FileChooser enr = new FileChooser();
@@ -167,7 +161,7 @@ public class Controller {
 			try {
 				FileInputStream fus = new FileInputStream(chemin1);
 				FileOutputStream fas = new FileOutputStream(nom.getText() + ".ang");
-				nomm = nom.getText();
+
 				int octet = fus.read();
 				int nb = 0;
 				while (octet != -1) {
@@ -200,12 +194,10 @@ public class Controller {
 		sortie1.print(texto);
 		sortie1.print("\n\n");
 		sortie1.print("Caractère: ");
-		caractère = carocc.getText();
-		caro = caractère;
+
 		sortie1.print(caractère);
 		sortie1.print("\n\n");
-		evalu = eval.isSelected();
-		valu = evalu;
+
 		if (eval.isSelected()) {
 			sortie1.print("Eval: ");
 			sortie1.print("1");
@@ -221,8 +213,7 @@ public class Controller {
 			sortie1.print("0");
 			sortie1.print("\n\n");
 			sortie1.print("AffichR: ");
-			afficheRaports = afficheRaport.isSelected();
-			affR = afficheRaports;
+
 			if (afficheRaport.isSelected()) {
 				sortie1.print(1);
 			} else {
@@ -230,8 +221,7 @@ public class Controller {
 			}
 			sortie1.print("\n\n");
 			sortie1.print("RemplacementP: ");
-			remplacementPartiels = remplacementPartiel.isSelected();
-			remplacement = remplacementPartiels;
+
 			if (remplacementPartiel.isSelected()) {
 				sortie1.print(1);
 			} else {
@@ -239,8 +229,7 @@ public class Controller {
 			}
 			sortie1.print("\n\n");
 			sortie1.print("BtnSolution: ");
-			solutions = solution.isSelected();
-			sol = solutions;
+
 			if (solution.isSelected()) {
 				sortie1.print(1);
 			} else {
@@ -249,22 +238,19 @@ public class Controller {
 		}
 		sortie1.print("\n\n");
 		sortie1.print("Time: ");
-		timme = time.isSelected();
+
 		if (time.isSelected()) {
-			min = Integer.parseInt(min2.getText());
-			minn = min;
+
 			sortie1.print(min2.getText());
 			sortie1.print(" : ");
-			sec = Integer.parseInt(sec2.getText());
-			secc = sec;
+
 			sortie1.print(sec2.getText());
 		} else {
 			sortie1.print("null");
 		}
 		sortie1.print("\n\n");
 		sortie1.print("Casse: ");
-		cassetext = casseText.isSelected();
-		cass = cassetext;
+
 		if (casseText.isSelected()) {
 			sortie1.print("1");
 		} else {
@@ -272,9 +258,7 @@ public class Controller {
 		}
 		sortie1.print("\n\n");
 		sortie1.print("aide: ");
-		sortie1.print(texte.getText());
-		aide = texte.getText();
-		aide2 = aide;
+		sortie1.print(texteAide.getText());
 		sortie1.close();
 		changeScene(FXMLLoader.load(getClass().getResource("/application/Prof.fxml")));
 	}
@@ -283,22 +267,71 @@ public class Controller {
 		texteocculte = texte.getText();
 		texto = texteocculte;
 		changeScene(FXMLLoader.load(getClass().getResource("/application/Creerexo2.fxml")));
-
-		eval.setSelected(valu);
-		if (eval.isSelected()) {
-			remplacementPartiel.setSelected(remplacement);
-			solution.setSelected(sol);
-			afficheRaport.setSelected(affR);
-		}
-		nom.setText(nomm);
-		carocc.setText(caro);
-		casseText.setSelected(cass);
-		time.setSelected(timme);
-		if (time.isSelected()) {
-			min2.setText(String.valueOf(minn));
-			sec2.setText(String.valueOf(secc));
-		}
+		if (nomm != null) {
+			nom.setText(nomm);
+			carocc.setText(caro);
+			eval.setSelected(valu);
+			if (eval.isSelected()) {
+				remplacementPartiel.setSelected(remplacement);
+				solution.setSelected(sol);
+				afficheRaport.setSelected(affR);
+			}
+			
+			casseText.setSelected(cassetext);
+			time.setSelected(timme);
+			if (time.isSelected()) {
+				min2.setText(String.valueOf(minn));
+				sec2.setText(String.valueOf(secc));
+			}
 		texteAide.setText(aide2);
+		}
+
+	}
+
+	public void arriere() {
+		
+		nomExo=nom.getText();
+		nomm = nomExo;
+		
+		caractère = carocc.getText();
+		caro = caractère;
+		
+		evalu = eval.isSelected();
+		valu = evalu;
+		
+		if (valu) {
+			
+			remplacementPartiels= remplacementPartiel.isSelected();
+			remplacement = remplacementPartiels;
+			
+			solutions = solution.isSelected();
+			sol = solutions;
+			
+			afficheRaports = afficheRaport.isSelected();
+			affR= afficheRaports;
+		}
+		
+		aide = texteAide.getText();
+		aide = aide2;
+		
+		casseTexte= casseText.isSelected();
+		cassetext = casseTexte;
+		
+		time2 = time.isSelected();
+		timme = time2;
+		if (time.isSelected()) {
+			min = Integer.parseInt(min2.getText());
+			minn = min;
+			sec = Integer.parseInt(sec2.getText());
+			secc = sec;
+		}
+
+		stage.setScene(ancien);
+		if (chemin1 != null)
+			video.setText(chemin1);
+		if (texto != null)
+			texte.setText(texto);
+
 	}
 
 	public void checkEvaluation() {
@@ -335,31 +368,5 @@ public class Controller {
 		}
 	}
 
-	public void arriere() {
-		stage.setScene(ancien);
-		if (chemin1!= null)
-			video.setText(chemin1);
-		if (texto != null)
-			texte.setText(texto);
-		evalu = eval.isSelected();
-		valu = evalu;
-		aide = texte.getText();
-		aide2 = aide;
-		cassetext = casseText.isSelected();
-		cass = cassetext;
-		timme = time.isSelected();
-		if (time.isSelected()) {
-			min = Integer.parseInt(min2.getText());
-			minn = min;
-			sec = Integer.parseInt(sec2.getText());
-			secc = sec;
-		}
-		solutions = solution.isSelected();
-		sol = solutions;
-		remplacementPartiels = remplacementPartiel.isSelected();
-		remplacement = remplacementPartiels;
-		caractère = carocc.getText();
-		caro = caractère;
-	}
 
 }
