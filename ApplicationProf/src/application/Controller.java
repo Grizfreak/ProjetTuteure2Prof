@@ -78,7 +78,9 @@ public class Controller {
 	private boolean afficheRaports;
 	private boolean remplacementPartiels;
 	private boolean solutions;
-
+	
+	private static int minn;
+	private static int secc;
 	public void enreg() throws FileNotFoundException {
 		String enreg = exo.getText();
 		FileChooser enr = new FileChooser();
@@ -180,33 +182,35 @@ public class Controller {
 
 		PrintWriter sortie1 = new PrintWriter(new FileWriter(nom.getText()+".ang", true));
 		sortie1.print("\n\n");
-		sortie1.print("\\");
+		sortie1.print("TextOcculte: ");
 		sortie1.print(texto);
 		sortie1.print("\n\n");
-		sortie1.print("\\");
+		sortie1.print("Caractère: ");
 		caractère = carocc.getText();
 		sortie1.print(caractère);
 		sortie1.print("\n\n");
 		if (eval.isSelected()) {
-			sortie1.print("\\");
+			sortie1.print("Eval: ");
 			sortie1.print("1");
 			sortie1.print("\n\n");
-			sortie1.print("\\");
+			sortie1.print("AffichR: 0");
 			sortie1.print("\n\n");
-			sortie1.print("\\");
+			sortie1.print("RemplacementP: 0");
 			sortie1.print("\n\n");
-			sortie1.print("\\");
+			sortie1.print("BtnSolution: 0");
 
 		} else {
-			
-			sortie1.print("\\");
+			sortie1.print("Eval: ");
+			sortie1.print("0");
+			sortie1.print("\n\n");
+			sortie1.print("AffichR: ");
 			if(afficheRaport.isSelected()) {
 				sortie1.print(1);
 			}else {
 				sortie1.print(0);
 			}
 			sortie1.print("\n\n");
-			sortie1.print("\\");
+			sortie1.print("RemplacementP: ");
 			if(remplacementPartiel.isSelected()) {
 				sortie1.print(1);
 			}
@@ -214,7 +218,7 @@ public class Controller {
 				sortie1.print(0);
 			}
 			sortie1.print("\n\n");
-			sortie1.print("\\");
+			sortie1.print("BtnSolution: ");
 			if(solution.isSelected()) {
 				sortie1.print(1);
 			}else {
@@ -222,11 +226,13 @@ public class Controller {
 			}
 		}
 		sortie1.print("\n\n");
-		sortie1.print("\\");
+		sortie1.print("Time: ");
 		if (time.isSelected()) {
 			sortie1.print(min2.getText());
+			minn = min2;
 			sortie1.print(" : ");
 			sortie1.print(sec2.getText());
+			secc = sec2;
 			
 		}else {
 			sortie1.print("0");
