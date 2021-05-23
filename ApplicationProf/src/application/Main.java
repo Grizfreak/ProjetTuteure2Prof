@@ -23,14 +23,14 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fx = new FXMLLoader(getClass().getResource("/application/Prof.fxml"));
         Parent root = fx.load();   
-        Controller controller = fx.getController();
+        Controllerdeb Controllerde = fx.getController();
         Scene scene = new Scene(root, width, height);
         actualRoot =root;
         stage.setTitle("Application Anglais");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        controller.stage = stage;
+        Controllerde.stage = stage;
     }
 	
 	

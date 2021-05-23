@@ -9,9 +9,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -22,87 +25,35 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-public class Controller {
-	@FXML
-	public static Stage stage;
-	@FXML
-	private TextArea texte;
-	@FXML
-	private TextArea texteAide;
-	@FXML
-	private TextArea exo;
-	@FXML
-	private TextField video;
+public class Controller implements Initializable{
 	@FXML
 	private String chemin2;
 	@FXML
-	private CheckBox eval;
+	private TextField video;
 	@FXML
-	private CheckBox casseText;
+	private TextArea texte;
 	@FXML
-	private CheckBox afficheRaport;
-	@FXML
-	private CheckBox remplacementPartiel;
-	@FXML
-	private CheckBox solution;
-	@FXML
-	private CheckBox time;
-	@FXML
-	private TextField nom;
-	@FXML
-	private TextField carocc;
-	@FXML
-	private TextField min2;
-	@FXML
-	private TextField sec2;
-	@FXML
-	private Text deb;
-
+	public static Stage stage;
 	private String texteocculte;
-	
-	private int nbOctetVideo;
-	private String nomExo;
-	private String caractère;
-	private int min;
-	private int sec;
-	private String aide;
-	private boolean evalu;
-	private boolean casseTexte;
-	private boolean afficheRaports;
-	private boolean remplacementPartiels;
-	private boolean solutions;
-	private boolean time2;
-	
 	private static Scene ancien;
 	private static String chemin1;
 	private static String texto;
-	private static String nomm;
-	private static String caro;
-	private static boolean valu;
-	private static boolean timme;
-	private static int minn;
-	private static int secc;
-	private static boolean sol;
-	private static boolean cassetext;
-	private static boolean remplacement;
-	private static boolean affR;
-	private static String aide2;
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		initialize();
+
+	}
+
+	public void initialize() {
+		if (chemin1 != null) {
+			video.setText(chemin1);
+		}
+		if (texto != null) {
+			texte.setText(texto);
+		}
 	
-	public void enreg() throws FileNotFoundException {
-		String enreg = exo.getText();
-		FileChooser enr = new FileChooser();
-		File enr2 = enr.showSaveDialog(stage);
-		PrintWriter f2 = new PrintWriter(enr2);
-		f2.print(enreg);
-		f2.close();
 	}
-
-	public void creer() throws IOException {
-
-		creerScene("/application/Creerexo.fxml");
-
-	}
-
+	
 	private void creerScene(String chemin) throws IOException {
 		FXMLLoader f = new FXMLLoader(getClass().getResource(chemin));
 		Parent root = f.load();
@@ -120,7 +71,6 @@ public class Controller {
 		Scene next = new Scene(root);
 		ancien = stage.getScene();
 		stage.setScene(next);
-
 	}
 
 	public void changeScene(Parent root, float width, float height) {
@@ -129,23 +79,9 @@ public class Controller {
 		Scene next = new Scene(root, width, height);
 		ancien = stage.getScene();
 		thisStage.setScene(next);
+		
 	}
-
-	public void ouvrir() throws IOException {
-		FileChooser ouv = new FileChooser();
-		File fich = ouv.showOpenDialog(stage);
-		BufferedReader vous = new BufferedReader(new FileReader(fich));
-		String rev;
-		String cont = "";
-		while ((rev = vous.readLine()) != null) {
-			cont += rev;
-		}
-
-		exo.setText(cont);
-
-		vous.close();
-	}
-
+	
 	public void ouvrirVideo() throws IOException {
 		FileChooser ouv = new FileChooser();
 		ouv.getExtensionFilters().add(new ExtensionFilter("mp3", "*.mp3"));
@@ -156,217 +92,26 @@ public class Controller {
 		chemin1 = chemin2;
 	}
 
-	public void save() throws IOException {
-		if (chemin1 != null) {
-			try {
-				FileInputStream fus = new FileInputStream(chemin1);
-				FileOutputStream fas = new FileOutputStream(nom.getText() + ".ang");
 
-				int octet = fus.read();
-				int nb = 0;
-				while (octet != -1) {
-					octet = fus.read();
-					nb++;
-				}
-				PrintWriter sortie2 = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
-				fus.close();
-
-				FileInputStream fis = new FileInputStream(chemin1);
-				octet = fis.read();
-				while (octet != -1) {
-					fas.write(octet);
-					octet = fis.read();
-				}
-				sortie2.println("\nnb : " + nb + ";\n");
-				sortie2.close();
-				fis.close();
-				fas.close();
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		PrintWriter sortie1 = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
-		sortie1.print("\n\n");
-		sortie1.print("TextOcculte: ");
-		sortie1.print(texto);
-		sortie1.print("\n\n");
-		sortie1.print("Caractère: ");
-
-		sortie1.print(caractère);
-		sortie1.print("\n\n");
-
-		if (eval.isSelected()) {
-			sortie1.print("Eval: ");
-			sortie1.print("1");
-			sortie1.print("\n\n");
-			sortie1.print("AffichR: 0");
-			sortie1.print("\n\n");
-			sortie1.print("RemplacementP: 0");
-			sortie1.print("\n\n");
-			sortie1.print("BtnSolution: 0");
-
-		} else {
-			sortie1.print("Eval: ");
-			sortie1.print("0");
-			sortie1.print("\n\n");
-			sortie1.print("AffichR: ");
-
-			if (afficheRaport.isSelected()) {
-				sortie1.print(1);
-			} else {
-				sortie1.print(0);
-			}
-			sortie1.print("\n\n");
-			sortie1.print("RemplacementP: ");
-
-			if (remplacementPartiel.isSelected()) {
-				sortie1.print(1);
-			} else {
-				sortie1.print(0);
-			}
-			sortie1.print("\n\n");
-			sortie1.print("BtnSolution: ");
-
-			if (solution.isSelected()) {
-				sortie1.print(1);
-			} else {
-				sortie1.print(0);
-			}
-		}
-		sortie1.print("\n\n");
-		sortie1.print("Time: ");
-
-		if (time.isSelected()) {
-
-			sortie1.print(min2.getText());
-			sortie1.print(" : ");
-
-			sortie1.print(sec2.getText());
-		} else {
-			sortie1.print("null");
-		}
-		sortie1.print("\n\n");
-		sortie1.print("Casse: ");
-
-		if (casseText.isSelected()) {
-			sortie1.print("1");
-		} else {
-			sortie1.print("0");
-		}
-		sortie1.print("\n\n");
-		sortie1.print("aide: ");
-		sortie1.print(texteAide.getText());
-		sortie1.close();
-		changeScene(FXMLLoader.load(getClass().getResource("/application/Prof.fxml")));
-	}
-
-	public void deuxiemePage() throws IOException {
+	public void deuxiemePage() throws IOException{
 		texteocculte = texte.getText();
 		texto = texteocculte;
 		changeScene(FXMLLoader.load(getClass().getResource("/application/Creerexo2.fxml")));
-		if (nomm != null) {
-			nom.setText(nomm);
-			carocc.setText(caro);
-			eval.setSelected(valu);
-			if (eval.isSelected()) {
-				remplacementPartiel.setSelected(remplacement);
-				solution.setSelected(sol);
-				afficheRaport.setSelected(affR);
-			}
-			
-			casseText.setSelected(cassetext);
-			time.setSelected(timme);
-			if (time.isSelected()) {
-				min2.setText(String.valueOf(minn));
-				sec2.setText(String.valueOf(secc));
-			}
-		texteAide.setText(aide2);
-		}
-
+		
+	}
+	public static String getchemin() {
+		return chemin1;
+	}
+	public static Scene getAncien() {
+		return ancien;
+	}
+	public static String getTexto() {
+		return texto;
 	}
 
-	public void arriere() {
-		
-		nomExo=nom.getText();
-		nomm = nomExo;
-		
-		caractère = carocc.getText();
-		caro = caractère;
-		
-		evalu = eval.isSelected();
-		valu = evalu;
-		
-		if (valu) {
-			
-			remplacementPartiels= remplacementPartiel.isSelected();
-			remplacement = remplacementPartiels;
-			
-			solutions = solution.isSelected();
-			sol = solutions;
-			
-			afficheRaports = afficheRaport.isSelected();
-			affR= afficheRaports;
-		}
-		
-		aide = texteAide.getText();
-		aide = aide2;
-		
-		casseTexte= casseText.isSelected();
-		cassetext = casseTexte;
-		
-		time2 = time.isSelected();
-		timme = time2;
-		if (time.isSelected()) {
-			min = Integer.parseInt(min2.getText());
-			minn = min;
-			sec = Integer.parseInt(sec2.getText());
-			secc = sec;
-		}
+	
 
-		stage.setScene(ancien);
-		if (chemin1 != null)
-			video.setText(chemin1);
-		if (texto != null)
-			texte.setText(texto);
-
-	}
-
-	public void checkEvaluation() {
-		evalu = eval.isSelected();
-		if (!evalu) {
-			solution.setDisable(false);
-			remplacementPartiel.setDisable(false);
-			afficheRaport.setDisable(false);
-		} else {
-			solution.setDisable(true);
-			remplacementPartiel.setDisable(true);
-			afficheRaport.setDisable(true);
-		}
-	}
-
-	public void checktime() {
-		if (!time.isSelected()) {
-			min2.setVisible(false);
-			sec2.setVisible(false);
-			deb.setVisible(false);
-		} else {
-			min2.setVisible(true);
-			sec2.setVisible(true);
-			deb.setVisible(true);
-		}
-	}
-
-	public void clavier() {
-		if (!min2.getText().matches("[0-9]+") || min2.getText().length() > 2) {
-			min2.deletePreviousChar();
-		}
-		if (!sec2.getText().matches("[0-9]+") || sec2.getText().length() > 2) {
-			sec2.deletePreviousChar();
-		}
-	}
+	
 
 
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="252.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<BorderPane prefHeight="252.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllerdeb">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
