@@ -13,14 +13,14 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#enreg" text="Enregistrer un exercice" />
-                  <MenuItem mnemonicParsing="false" onAction="#creer" text="Créer votre exercice" />
+                  <MenuItem mnemonicParsing="false" onAction="#creerScene" text="Créer votre exercice" />
                   <MenuItem mnemonicParsing="false" onAction="#ouvrir" text="Modifier exercice" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Option">
             <items>
               <MenuItem mnemonicParsing="false" text="Changer thème" />
-                  <MenuItem mnemonicParsing="false" text="Essayerla version étudiante" />
+                  <MenuItem mnemonicParsing="false" text="Essayer la version étudiante" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -32,6 +32,6 @@
       </MenuBar>
    </top>
    <center>
-      <Text onMouseClicked="#creer" strokeType="OUTSIDE" strokeWidth="0.0" text="Créer votre exercice?" BorderPane.alignment="CENTER" />
+      <Text onMouseClicked="#creerScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Créer votre exercice?" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

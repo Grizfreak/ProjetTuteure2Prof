@@ -61,8 +61,7 @@ public class Controller2 implements Initializable {
 	private boolean remplacementPartiels;
 	private boolean solutions;
 	private boolean time2;
-
-	private static Scene ancien;
+	
 	private static String nomm;
 	private static String caro;
 	private static boolean valu;
@@ -75,6 +74,8 @@ public class Controller2 implements Initializable {
 	private static boolean affR;
 	private static String aide2;
 	
+	private FXMLLoader ancien = new FXMLLoader(getClass().getResource("/application/Creerexo.fxml"));
+	private FXMLLoader test = new FXMLLoader(getClass().getResource("/application/voirexo.fxml"));
 	@Override
 	public void initialize( URL arg0, ResourceBundle arg1) {
 		nom.setText(nomm);
@@ -96,34 +97,19 @@ public class Controller2 implements Initializable {
 		
 	}
 	
-	private void creerScene(String chemin) throws IOException {
-		FXMLLoader f = new FXMLLoader(getClass().getResource(chemin));
-		Parent root = f.load();
-		Scene a = new Scene(root);
-		Stage stg = new Stage();
-		ancien = stage.getScene();
-		stg.setScene(a);
-		stg.show();
-		stage = stg;
 
-	}
 
-	private void changeScene(Parent root) {
-		Main.actualRoot = root;
-		Scene next = new Scene(root);
-		ancien = stage.getScene();
-		stage.setScene(next);
-		
-	}
+	public void changeScene(Parent root) {
 
-	public void changeScene(Parent root, float width, float height) {
 		Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
 		Main.actualRoot = root;
-		Scene next = new Scene(root, width, height);
-		ancien = stage.getScene();
+		Scene next = new Scene(root);
+		thisStage.setResizable(false);
+		thisStage.setX(200);
 		thisStage.setScene(next);
-		
+
 	}
+
 	
 
 	public void save() throws IOException {
@@ -163,7 +149,7 @@ public class Controller2 implements Initializable {
 		sortie1.print("TextOcculte: ");
 		sortie1.print(Controller.getTexto());
 		sortie1.print("\n\n");
-		sortie1.print("Caractère: ");
+		sortie1.print("Caractere: ");
 
 		sortie1.print(caractère);
 		sortie1.print("\n\n");
@@ -232,7 +218,7 @@ public class Controller2 implements Initializable {
 		sortie1.close();
 		changeScene(FXMLLoader.load(getClass().getResource("/application/Prof.fxml")));
 	}
-	public void arriere() {
+	public void arriere() throws IOException {
 
 		nomExo = nom.getText();
 		nomm = nomExo;
@@ -270,7 +256,8 @@ public class Controller2 implements Initializable {
 			secc = sec;
 		}
 
-		stage.setScene(ancien);
+		Parent root = ancien.load();
+		changeScene(root);
 	}
 
 	public void checkEvaluation() {

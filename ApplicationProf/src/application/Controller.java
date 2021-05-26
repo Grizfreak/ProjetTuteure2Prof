@@ -38,6 +38,8 @@ public class Controller implements Initializable{
 	private static Scene ancien;
 	private static String chemin1;
 	private static String texto;
+	
+	private FXMLLoader creer= new FXMLLoader(getClass().getResource("/application/creerexo2.fxml"));
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initialize();
@@ -54,8 +56,8 @@ public class Controller implements Initializable{
 	
 	}
 	
-	private void creerScene(String chemin) throws IOException {
-		FXMLLoader f = new FXMLLoader(getClass().getResource(chemin));
+	private void creerScene() throws IOException {
+		FXMLLoader f = new FXMLLoader(getClass().getResource(""));
 		Parent root = f.load();
 		Scene a = new Scene(root);
 		Stage stg = new Stage();
@@ -67,10 +69,12 @@ public class Controller implements Initializable{
 	}
 
 	private void changeScene(Parent root) {
-		Main.actualRoot = root;
-		Scene next = new Scene(root);
-		ancien = stage.getScene();
-		stage.setScene(next);
+		   Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
+	       Main.actualRoot=root;
+	       Scene next = new Scene(root);
+	       thisStage.setResizable(false);
+	       thisStage.setX(200);
+	       thisStage.setScene(next);
 	}
 
 	public void changeScene(Parent root, float width, float height) {
@@ -96,7 +100,8 @@ public class Controller implements Initializable{
 	public void deuxiemePage() throws IOException{
 		texteocculte = texte.getText();
 		texto = texteocculte;
-		changeScene(FXMLLoader.load(getClass().getResource("/application/Creerexo2.fxml")));
+		Parent root= creer.load();
+		changeScene(root);
 		
 	}
 	public static String getchemin() {

@@ -20,17 +20,16 @@ public class Main extends Application {
 	}
 	
 	@Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader fx = new FXMLLoader(getClass().getResource("/application/Prof.fxml"));
-        Parent root = fx.load();   
-        Controllerdeb Controllerde = fx.getController();
-        Scene scene = new Scene(root, width, height);
-        actualRoot =root;
-        stage.setTitle("Application Anglais");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-        Controllerde.stage = stage;
+    public void start(Stage primaryStage) throws Exception {
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/application/Prof.fxml"));
+        actualRoot=root;
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.centerOnScreen();
+        primaryStage.show();
+        primaryStage.setTitle("Application Anglais");
     }
 	
 	
