@@ -117,27 +117,19 @@ public class Controller2 implements Initializable {
 			try {
 				FileInputStream fus = new FileInputStream(Controller.getchemin());
 				FileOutputStream fas = new FileOutputStream(nom.getText() + ".ang");
-
-				int octet = fus.read();
+				PrintWriter sortie = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
 				int nb = 0;
-				while (octet != -1) {
-					octet = fus.read();
-					nb++;
-				}
-				PrintWriter sortie2 = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
+				byte[]  Vide= fus.readAllBytes();
+				nb = Vide.length;
 				fus.close();
+				fas.write(Vide);
+				sortie.print("\n");
 
-				FileInputStream fis = new FileInputStream(Controller.getchemin());
-				octet = fis.read();
-				while (octet != -1) {
-					fas.write(octet);
-					octet = fis.read();
-				}
-				sortie2.println("\nnb : " + nb + ";\n");
-				sortie2.close();
-				fis.close();
+				sortie.print("Nombre octet: ");
+				sortie.print(nb);
+				sortie.print("\n");
 				fas.close();
-
+				sortie.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

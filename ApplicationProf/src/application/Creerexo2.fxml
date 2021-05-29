@@ -57,7 +57,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="carocc" editable="false" prefHeight="30.0" prefWidth="30.0" text="#" />
+                  <TextField fx:id="carocc" prefHeight="30.0" prefWidth="30.0" text="#" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
