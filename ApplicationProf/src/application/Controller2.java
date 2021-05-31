@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -61,6 +62,8 @@ public class Controller2 implements Initializable {
 	private boolean remplacementPartiels;
 	private boolean solutions;
 	private boolean time2;
+	private static String chem;
+	private static String tex;
 	
 	private static String nomm;
 	private static String caro;
@@ -74,6 +77,7 @@ public class Controller2 implements Initializable {
 	private static boolean affR;
 	private static String aide2;
 	
+	private Controller cnt = new Controller();
 	private FXMLLoader ancien = new FXMLLoader(getClass().getResource("/application/Creerexo.fxml"));
 	private FXMLLoader test = new FXMLLoader(getClass().getResource("/application/voirexo.fxml"));
 	@Override
@@ -100,22 +104,21 @@ public class Controller2 implements Initializable {
 
 
 	public void changeScene(Parent root) {
-
 		Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
 		Main.actualRoot = root;
 		Scene next = new Scene(root);
+		
 		thisStage.setResizable(false);
 		thisStage.setX(200);
 		thisStage.setScene(next);
-
+		//cnt.arriere(chem,tex);
 	}
-
 	
 
 	public void save() throws IOException {
-		if (Controller.getchemin() != null) {
+		if (cnt.getchemin() != null) {
 			try {
-				FileInputStream fus = new FileInputStream(Controller.getchemin());
+				FileInputStream fus = new FileInputStream(cnt.getchemin());
 				FileOutputStream fas = new FileOutputStream(nom.getText() + ".ang");
 				PrintWriter sortie = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
 				int nb = 0;
@@ -207,8 +210,9 @@ public class Controller2 implements Initializable {
 		sortie1.print("\n\n");
 		sortie1.print("aide: ");
 		sortie1.print(texteAide.getText());
-		sortie1.close();
-		changeScene(FXMLLoader.load(getClass().getResource("/application/Prof.fxml")));
+		sortie1.close(); 
+		Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
+		thisStage.close();
 	}
 	public void arriere() throws IOException {
 
@@ -247,8 +251,9 @@ public class Controller2 implements Initializable {
 			sec = Integer.parseInt(sec2.getText());
 			secc = sec;
 		}
-
+	
 		Parent root = ancien.load();
+	
 		changeScene(root);
 	}
 
@@ -287,4 +292,14 @@ public class Controller2 implements Initializable {
 	}
 
 
+
+	public void setChem(String chem) {
+		this.chem = chem;
+		System.out.println(this.chem);
+	}
+
+	public void setTex(String tex) {
+		this.tex = tex;
+	}
+	
 }

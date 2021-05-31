@@ -33,29 +33,19 @@ public class Controller implements Initializable{
 	@FXML
 	private TextArea texte;
 	@FXML
-	public static Stage stage;
+	
 	private String texteocculte;
-	private static Scene ancien;
 	private static String chemin1;
+	
 	private static String texto;
 	
 	private FXMLLoader creer= new FXMLLoader(getClass().getResource("/application/creerexo2.fxml"));
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		initialize();
 
 	}
 
-	public void initialize() {
-		if (chemin1 != null) {
-			video.setText(chemin1);
-		}
-		if (texto != null) {
-			texte.setText(texto);
-		}
-	
-	}
-	
+	/*
 	private void creerScene() throws IOException {
 		FXMLLoader f = new FXMLLoader(getClass().getResource(""));
 		Parent root = f.load();
@@ -65,25 +55,20 @@ public class Controller implements Initializable{
 		stg.setScene(a);
 		stg.show();
 		stage = stg;
+	}*/
 
-	}
 
 	private void changeScene(Parent root) {
-		   Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
-	       Main.actualRoot=root;
-	       Scene next = new Scene(root);
-	       thisStage.setResizable(false);
-	       thisStage.setX(200);
-	       thisStage.setScene(next);
-	}
-
-	public void changeScene(Parent root, float width, float height) {
-		Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
-		Main.actualRoot = root;
-		Scene next = new Scene(root, width, height);
-		ancien = stage.getScene();
-		thisStage.setScene(next);
-		
+		 Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
+	     Main.actualRoot=root;
+	     Scene next = new Scene(root);
+	    
+	     thisStage.setResizable(false);
+	     thisStage.setX(200);
+	     Controller2 ctn2 =new Controller2();
+	     ctn2.setChem(chemin1);
+	     ctn2.setTex(texto);
+	     thisStage.setScene(next);
 	}
 	
 	public void ouvrirVideo() throws IOException {
@@ -102,21 +87,25 @@ public class Controller implements Initializable{
 		texto = texteocculte;
 		Parent root= creer.load();
 		changeScene(root);
-		
 	}
+	
 	public static String getchemin() {
 		return chemin1;
 	}
-	public static Scene getAncien() {
-		return ancien;
+
+	public void arriere(String chemin, String texto) {
+		System.out.println(chemin);
+		if (chemin != null) {
+			System.out.println("o");
+			video.setText(chemin);
+		}
+		if(texto != null) {
+			System.out.println("n");
+			texte.setText(texto);
+		}
 	}
+	
 	public static String getTexto() {
 		return texto;
 	}
-
-	
-
-	
-
-
 }
