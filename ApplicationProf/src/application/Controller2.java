@@ -142,7 +142,8 @@ public class Controller2 implements Initializable {
 		PrintWriter sortie1 = new PrintWriter(new FileWriter(nom.getText() + ".ang", true));
 		sortie1.print("\n\n");
 		sortie1.print("TextOcculte: ");
-		sortie1.print(Controller.getTexto());
+		sortie1.print(fin());
+		System.out.println(fin());
 		sortie1.print("\n\n");
 		sortie1.print("Caractere: ");
 
@@ -256,7 +257,22 @@ public class Controller2 implements Initializable {
 	
 		changeScene(root);
 	}
-
+	public String fin() {
+		
+		String valeur =Controller.getTexto();
+		String textOCculte = "";
+		char c;
+		for(int i = 0; i< valeur.length(); i++ ) {
+			c = valeur.charAt(i);
+			if (c == '\n') {
+				textOCculte = textOCculte + " @ ";
+			}
+			else {
+				textOCculte = textOCculte + c;
+			}
+		}
+		return textOCculte;
+	}
 	public void checkEvaluation() {
 		evalu = eval.isSelected();
 		if (!evalu) {
