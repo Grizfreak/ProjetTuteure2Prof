@@ -213,6 +213,8 @@ public class Controller2 implements Initializable {
 		sortie1.print(texteAide.getText());
 		sortie1.close(); 
 		Stage thisStage = (Stage) Main.actualRoot.getScene().getWindow();
+		
+		Main.actualRoot= Main.rootmain;
 		thisStage.close();
 	}
 	public void arriere() throws IOException {

@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 public class Main extends Application {
 
 	public static Parent actualRoot;
-
+	public static Parent rootmain;
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -20,6 +20,7 @@ public class Main extends Application {
 
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Prof.fxml"));
 			actualRoot = root;
+			rootmain = actualRoot;
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(true);
